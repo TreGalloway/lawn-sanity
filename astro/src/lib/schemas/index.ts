@@ -1,0 +1,5 @@
+export { serviceSchema } from './service'
+export { serviceAreaSchema } from './serviceArea'
+export { galleryItemSchema } from './galleryItem'
+export { siteSettingsSchema } from './siteSettings'
+export { pageSchema } from './page'

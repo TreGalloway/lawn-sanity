@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import ServiceAreas from '../components/ServiceAreas.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { fetchSiteSettings, fetchServices, fetchServiceAreas } from '../lib/sanity';
+
+const siteData = await fetchSiteSettings();
+const services = await fetchServices();
+const serviceAreas = await fetchServiceAreas();
+---
+
+<Layout title="Home" description="MI Premier Lawn Care - Professional lawn care services in Flint, MI and surrounding areas. Free estimates on all services.">
+  <Hero siteData={siteData} />
+  <ServiceGrid services={services} />
+  <ServiceAreas areas={serviceAreas} />
+  <CTABanner siteData={siteData} />
+</Layout>

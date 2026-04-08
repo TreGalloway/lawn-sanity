@@ -1,0 +1,40 @@
+---
+import type { SiteSettings } from '../types';
+
+interface Props {
+  siteData: SiteSettings;
+}
+
+const { siteData } = Astro.props;
+---
+
+<section class="relative bg-gray-900 text-white py-24 lg:py-32">
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-primary-900"></div>
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
+      {siteData.heroTitle || 'Professional Lawn Care Services'}
+    </h1>
+    <p class="text-xl lg:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+      {siteData.heroSubtitle || 'Serving Flint, MI and surrounding areas'}
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href={siteData.yardbookUrl || '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2 bg-accent-500 hover:bg-accent-600 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg transition-colors"
+      >
+        {siteData.quoteButtonText || 'Get a Free Quote'}
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+      <a
+        href="/services"
+        class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors border border-white/20"
+      >
+        View Our Services
+      </a>
+    </div>
+  </div>
+</section>

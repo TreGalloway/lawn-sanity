@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Studio } from 'sanity';
-import config from './sanity.config';
+import config from '../lib/sanity.config';
 
 export default function AdminPage() {
   const [mounted, setMounted] = useState(false);

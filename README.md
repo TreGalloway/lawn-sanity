@@ -4,53 +4,69 @@
 
 ```
 lawn-sanity/
-├── astro/              # Astro frontend
+├── astro/              # Astro frontend (deploys to Railway)
 │   ├── src/
 │   │   ├── components/ # UI components
 │   │   ├── layouts/    # Page layouts
-│   │   ├── lib/       # Sanity client
-│   │   ├── pages/     # Astro pages
+│   │   ├── lib/        # Sanity client
+│   │   ├── pages/      # Astro pages
 │   │   └── types/      # TypeScript types
-│   ├── public/         # Static assets
-│   └── astro.config.mjs
-├── sanity/             # Sanity Studio
-│   ├── schemas/        # Content schemas
+│   └── public/          # Static assets
+├── sanity/             # Sanity Studio (hosted at sanity.studio)
+│   ├── schemas/         # Content schemas
 │   └── sanity.config.ts
-└── docs/               # Documentation
+└── railway.toml         # Railway deployment config
 ```
 
 ## Quick Start
 
-### 1. Set up Sanity
+### 1. Install Dependencies
 
 ```bash
-cd sanity
-npm install
+# Astro frontend
+cd astro && npm install
+
+# Sanity Studio
+cd sanity && npm install
 ```
 
-Create a Sanity project at https://sanity.io and get your project ID.
+### 2. Environment Variables
+
+Copy the example files and update with your Sanity credentials:
 
 ```bash
-npx sanity init --env
-```
-
-### 2. Set up Astro
-
-```bash
-cd astro
-npm install
-cp .env.example .env
-# Edit .env with your Sanity project ID
+cp astro/.env.example astro/.env
+cp sanity/.env.example sanity/.env.local
 ```
 
 ### 3. Run Development
 
 ```bash
-# Terminal 1: Sanity Studio
+# Terminal 1: Sanity Studio (optional - or use hosted version)
 cd sanity && npm run dev
 
-# Terminal 2: Astro
+# Terminal 2: Astro Frontend
 cd astro && npm run dev
+```
+
+## Deployment
+
+### Railway (Astro Frontend)
+
+1. Connect your GitHub repo to Railway
+2. Add environment variables:
+   - `PUBLIC_SANITY_PROJECT_ID` = your Sanity project ID
+   - `PUBLIC_SANITY_DATASET` = production
+3. Railway auto-detects Astro from `railway.toml`
+
+### Sanity Studio
+
+Access your hosted studio at: `https://[project-id].sanity.studio`
+
+Or deploy a custom domain:
+```bash
+cd sanity
+npx sanity deploy
 ```
 
 ## Environment Variables
@@ -61,20 +77,10 @@ PUBLIC_SANITY_PROJECT_ID=your-project-id
 PUBLIC_SANITY_DATASET=production
 ```
 
-## Deployment
-
-### Vercel (Recommended)
-```bash
-cd astro
-vercel
+### Sanity (.env.local)
 ```
-
-Add environment variables in Vercel dashboard.
-
-### Sanity
-```bash
-cd sanity
-sanity deploy
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
 ```
 
 ## Content Types
@@ -89,4 +95,3 @@ sanity deploy
 
 - Primary: Kelly Green (#4CBB17)
 - Accent: Yellow (#eab308)
-# lawn-sanity

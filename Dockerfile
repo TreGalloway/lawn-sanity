@@ -15,23 +15,22 @@ COPY astro/ ./
 # Build Astro
 RUN npm run build
 
-# Final stage - serve with nginx
+# Runtime stage
 FROM nginx:alpine
+
+# Install utilities for startup script
+RUN apk add --no-cache gettext curl bash
 
 # Copy built files
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy nginx config
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ $uri.html =404; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+# Copy nginx config template
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
 
-EXPOSE 80
+# Copy startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8080
+
+CMD ["/start.sh"]

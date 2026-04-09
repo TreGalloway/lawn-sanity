@@ -2,9 +2,10 @@
 builder = "DOCKERFILE"
 
 [deploy]
-healthcheckPath = "/"
+healthcheckPath = "/health"
 healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
 
 [environment]
 NODE_VERSION = "22"
+PORT = 8080

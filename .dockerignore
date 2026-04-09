@@ -1,0 +1,7 @@
+.git
+.gitignore
+README.md
+railway.toml
+sanity/
+.DS_Store
+*.log

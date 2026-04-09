@@ -21,7 +21,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div style={{ height: '100vh' }}>
       <Studio config={config} />
     </div>
   );

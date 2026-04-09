@@ -53,6 +53,11 @@ export interface SiteSettings {
   quoteButtonText?: string;
   facebookUrl?: string;
   navLinks?: NavLink[];
+  contactPageSubtitle?: string;
+  contactGetInTouchTitle?: string;
+  contactGetQuoteTitle?: string;
+  contactQuoteButtonText?: string;
+  contactQuoteHelperText?: string;
 }
 
 export interface Page {

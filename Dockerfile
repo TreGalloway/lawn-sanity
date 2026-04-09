@@ -7,30 +7,30 @@ WORKDIR /app
 COPY astro/package.json astro/package-lock.json* ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy source code
 COPY astro/ ./
 
-# Build Astro
+# Build Astro (SSR)
 RUN npm run build
 
-# Runtime stage
-FROM nginx:alpine
+# Runtime stage - minimal Node runtime
+FROM node:22-alpine
 
-# Install utilities for startup script
-RUN apk add --no-cache gettext curl bash
+WORKDIR /app
 
-# Copy built files
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy package files for production dependencies
+COPY astro/package.json astro/package-lock.json* ./
+RUN npm ci --omit=dev
 
-# Copy nginx config template
-COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
-
-# Copy startup script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+# Copy built output from builder
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
 
 EXPOSE 8080
 
-CMD ["/start.sh"]
+ENV PORT=8080
+ENV HOST=0.0.0.0
+
+CMD ["node", "dist/server/entry.mjs"]

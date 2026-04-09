@@ -86,6 +86,36 @@ export const siteSettingsSchema = defineType({
       type: 'url',
     }),
     defineField({
+      name: 'contactPageSubtitle',
+      title: 'Contact Page Subtitle',
+      type: 'string',
+      initialValue: 'Ready to get started? Contact us today for a free quote on lawn care services.',
+    }),
+    defineField({
+      name: 'contactGetInTouchTitle',
+      title: 'Contact - Get in Touch Title',
+      type: 'string',
+      initialValue: 'Get in Touch',
+    }),
+    defineField({
+      name: 'contactGetQuoteTitle',
+      title: 'Contact - Get a Free Quote Title',
+      type: 'string',
+      initialValue: 'Get a Free Quote',
+    }),
+    defineField({
+      name: 'contactQuoteButtonText',
+      title: 'Contact - Quote Button Text',
+      type: 'string',
+      initialValue: 'Request a Quote',
+    }),
+    defineField({
+      name: 'contactQuoteHelperText',
+      title: 'Contact - Quote Button Helper Text',
+      type: 'string',
+      initialValue: 'Click above to book through our online system',
+    }),
+    defineField({
       name: 'navLinks',
       title: 'Navigation Links',
       type: 'array',

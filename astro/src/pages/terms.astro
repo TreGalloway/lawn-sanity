@@ -6,7 +6,7 @@ import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('terms');
 
-const pageContent = page?.blocks?.find((b: any) => b._type === 'richText')?.content;
+const pageContent = page?.content;
 ---
 
 <Layout title="Terms of Service" description="Terms of Service for MI Premier Lawn Care">

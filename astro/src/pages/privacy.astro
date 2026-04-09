@@ -6,7 +6,7 @@ import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('privacy');
 
-const pageContent = page?.blocks?.find((b: any) => b._type === 'richText')?.content;
+const pageContent = page?.content;
 ---
 
 <Layout title="Privacy Policy" description="Privacy Policy for MI Premier Lawn Care">

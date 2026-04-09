@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Studio } from 'sanity';
-import baseConfig from '../lib/sanity.config';
+import config from '../lib/sanity.config';
 
 export default function AdminPage() {
   const [mounted, setMounted] = useState(false);
-  const [studioConfig, setStudioConfig] = useState(baseConfig);
 
   useEffect(() => {
     setMounted(true);
-    
-    const token = import.meta.env.SANITY_API_TOKEN;
-    if (token) {
-      setStudioConfig({ ...baseConfig, token });
-    }
   }, []);
 
   if (!mounted) {
@@ -28,10 +22,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen">
-      <Studio 
-        config={studioConfig}
-        unstable_noAuthBoundary
-      />
+      <Studio config={config} />
     </div>
   );
 }

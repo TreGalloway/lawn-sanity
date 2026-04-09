@@ -14,6 +14,7 @@ const config = defineConfig({
   title: 'MI Premier Lawn Care',
   projectId: 'u4dmbqdq',
   dataset: 'production',
+  basePath: '/admin',
   plugins: [
     structureTool({
       structure: (S) =>

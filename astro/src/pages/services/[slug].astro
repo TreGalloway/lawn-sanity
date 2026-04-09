@@ -2,68 +2,64 @@
 import Layout from '../../layouts/Layout.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import { fetchServiceBySlug, fetchSiteSettings } from '../../lib/sanity';
-import type { GetStaticPaths } from 'astro';
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const services = [
-    { slug: 'mowing', name: 'Mowing' },
-    { slug: 'hedge-trimming', name: 'Hedge Trimming' },
-    { slug: 'leaf-removal', name: 'Leaf Removal' },
-    { slug: 'fertilizing', name: 'Fertilizing' },
-    { slug: 'mulching', name: 'Mulching' },
-    { slug: 'overseeding', name: 'Overseeding' },
-    { slug: 'snow-removal', name: 'Snow Removal' },
-    { slug: 'salting', name: 'Salting' },
-  ];
-  
-  return services.map((service) => ({
-    params: { slug: service.slug },
-    props: { serviceName: service.name },
-  }));
-};
 
 const { slug } = Astro.params;
-const { serviceName } = Astro.props;
 
 const siteData = await fetchSiteSettings();
 const service = await fetchServiceBySlug(slug as string);
 
-const serviceInfo: Record<string, { description: string; features: string[] }> = {
+const FALLBACK_INFO: Record<string, { name: string; description: string; features: string[] }> = {
   'mowing': {
+    name: 'Mowing',
+    description: 'Professional mowing services with attention to detail. We provide weekly and biweekly mowing including string trimming, edging, and blowing for a polished finish.',
+    features: ['Weekly or biweekly schedules', 'String trimming included', 'Edge trimming', 'Debris blowing', 'Consistent cutting height'],
+  },
+  'lawn-mowing': {
+    name: 'Lawn Mowing',
     description: 'Professional mowing services with attention to detail. We provide weekly and biweekly mowing including string trimming, edging, and blowing for a polished finish.',
     features: ['Weekly or biweekly schedules', 'String trimming included', 'Edge trimming', 'Debris blowing', 'Consistent cutting height'],
   },
   'hedge-trimming': {
+    name: 'Hedge Trimming',
     description: 'Keep your hedges and bushes looking neat and well-maintained with our professional trimming services.',
     features: ['Professional shaping', 'Regular maintenance', 'Safety equipment', 'Clean removal of clippings'],
   },
   'leaf-removal': {
+    name: 'Leaf Removal',
     description: "Don't let fallen leaves damage your lawn. We offer thorough spring and fall leaf removal services.",
     features: ['Complete leaf cleanup', 'Spring and fall service', 'Bagging and removal', 'Lawn protection'],
   },
   'fertilizing': {
+    name: 'Fertilizing',
     description: 'Non-pesticide lawn fertilization for a healthier, greener lawn. Our fertilization program promotes strong root growth and vibrant color.',
     features: ['Multiple applications', 'Non-pesticide formula', 'Root development', 'Enhanced green color'],
   },
   'mulching': {
+    name: 'Mulching',
     description: 'Professional mulch installation to beautify your flower beds and retain moisture in your soil.',
     features: ['Fresh mulch installation', 'Weed suppression', 'Moisture retention', 'Curb appeal boost'],
   },
   'overseeding': {
+    name: 'Overseeding',
     description: 'Spring and fall overseeding to fill in bare spots and thicken your lawn for a lush appearance.',
     features: ['High-quality seed', 'Bare spot repair', 'Thicker lawn', 'Weed suppression'],
   },
   'snow-removal': {
+    name: 'Snow Removal',
     description: 'Reliable snow removal services to keep your driveways and walkways safe and accessible.',
     features: ['Driveway clearing', 'Walkway clearing', 'Timely service', 'Residential properties'],
   },
   'salting': {
+    name: 'Salting',
     description: 'Rock salt and calcium chloride application for ice control and safety during winter months.',
     features: ['Ice prevention', 'Driveway treatment', 'Safe walkways', 'Winter safety'],
   },
 };
 
-const info = serviceInfo[slug as string] || { description: 'Professional lawn care service.', features: [] };
+const serviceName: string = service?.name || FALLBACK_INFO[slug as string]?.name || (slug as string).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+const fallback = FALLBACK_INFO[slug as string] || { description: 'Professional lawn care service.', features: [] as string[] };
+const description = service?.shortDescription || fallback.description;
+const features = fallback.features;
 ---
 
 <Layout title={serviceName} description={`${serviceName} services by MI Premier Lawn Care in Flint, MI.`}>
@@ -82,12 +78,12 @@ const info = serviceInfo[slug as string] || { description: 'Professional lawn ca
         </h1>
         
         <p class="text-xl text-gray-600 mb-8">
-          {info.description}
+          {description}
         </p>
 
         <h2 class="text-2xl font-bold text-gray-900 mb-6">What's Included</h2>
         <ul class="space-y-4 mb-8">
-          {info.features.map((feature) => (
+          {features.map((feature) => (
             <li class="flex items-start gap-3">
               <svg class="w-6 h-6 text-primary-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />

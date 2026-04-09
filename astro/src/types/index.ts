@@ -5,6 +5,7 @@ export interface Service {
   shortDescription?: string;
   fullDescription?: any[];
   icon?: string;
+  displayOrder?: number;
   tabOrder?: number;
   pricingTable?: PricingTier[];
   ctaButton?: {
@@ -38,9 +39,12 @@ export interface GalleryItem {
 export interface SiteSettings {
   _id: string;
   companyName?: string;
+  owner?: string;
+  address?: string;
   phoneNumber?: string;
   email?: string;
-  address?: string;
+  founded?: string;
+  serviceAreas?: string[];
   yardbookUrl?: string;
   heroTitle?: string;
   heroSubtitle?: string;
@@ -48,6 +52,7 @@ export interface SiteSettings {
   hoursOfOperation?: string;
   quoteButtonText?: string;
   facebookUrl?: string;
+  navLinks?: NavLink[];
 }
 
 export interface Page {
@@ -84,6 +89,11 @@ export interface SanityImage {
 }
 
 export interface NavigationItem {
+  label: string;
+  href: string;
+}
+
+export interface NavLink {
   label: string;
   href: string;
 }

@@ -1,6 +1,6 @@
 ---
 import { fetchServices } from '../lib/sanity';
-import type { SiteSettings, Service } from '../types';
+import type { SiteSettings, Service, NavLink } from '../types';
 
 interface Props {
   siteData: SiteSettings;
@@ -8,13 +8,15 @@ interface Props {
 
 const { siteData } = Astro.props;
 
-const navLinks = [
+const defaultNavLinks: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
   { label: 'About', href: '/about' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];
+
+const navLinks = siteData.navLinks?.length ? siteData.navLinks : defaultNavLinks;
 
 const currentPath = Astro.url.pathname;
 ---

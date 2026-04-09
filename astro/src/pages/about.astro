@@ -7,7 +7,9 @@ import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('about');
 
-const pageContent = page?.blocks?.find((b: any) => b._type === 'richText')?.content;
+const richTextBlocks = page?.blocks?.filter((b: any) => b._type === 'richText') || [];
+const mainContent = richTextBlocks[0]?.content;
+const reasonsSection = richTextBlocks[1]?.content;
 ---
 
 <Layout title="About" description="Learn about MI Premier Lawn Care - Your trusted local lawn care experts in Flint, MI and surrounding areas.">
@@ -18,8 +20,10 @@ const pageContent = page?.blocks?.find((b: any) => b._type === 'richText')?.cont
       </h1>
       
       <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm mb-12">
-        {pageContent ? (
-          <RichText value={pageContent} className="prose prose-lg max-w-none" />
+        {mainContent ? (
+          <div class="prose prose-lg max-w-none">
+            <RichText value={mainContent} />
+          </div>
         ) : (
           <div class="prose prose-lg max-w-none">
             <p class="text-xl text-gray-600 mb-6">
@@ -103,6 +107,17 @@ const pageContent = page?.blocks?.find((b: any) => b._type === 'richText')?.cont
           </div>
         )}
       </div>
+
+      {reasonsSection && (
+        <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm mb-12">
+          <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-6 text-center">
+            Why Choose Us
+          </h2>
+          <div class="prose prose-lg max-w-none">
+            <RichText value={reasonsSection} />
+          </div>
+        </div>
+      )}
     </div>
   </section>
   <CTABanner siteData={siteData} />

@@ -40,8 +40,14 @@ export const serviceSchema = defineType({
       description: 'Icon identifier (e.g., "mower", "leaf", "water")',
     }),
     defineField({
+      name: 'displayOrder',
+      title: 'Display Order (for Services Page Tabs)',
+      type: 'number',
+      description: 'Lower numbers appear first. Use to reorder tabs on services page.',
+    }),
+    defineField({
       name: 'tabOrder',
-      title: 'Display Order',
+      title: 'Legacy Display Order',
       type: 'number',
     }),
     defineField({
@@ -81,8 +87,8 @@ export const serviceSchema = defineType({
   orderings: [
     {
       title: 'Display Order',
-      name: 'tabOrderAsc',
-      by: [{ field: 'tabOrder', direction: 'asc' }],
+      name: 'displayOrderAsc',
+      by: [{ field: 'displayOrder', direction: 'asc' }],
     },
   ],
   preview: {

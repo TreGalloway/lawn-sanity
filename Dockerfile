@@ -4,7 +4,8 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Copy package files
-COPY astro/package.json astro/package-lock.json* ./
+COPY astro/package.json ./package.json
+COPY astro/package-lock.json ./package-lock.json
 
 # Install dependencies
 RUN npm ci

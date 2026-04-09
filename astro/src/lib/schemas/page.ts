@@ -22,6 +22,12 @@ export const pageSchema = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'showInNav',
+      title: 'Show in Navigation',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'blocks',
       title: 'Content Blocks',
       type: 'array',

@@ -22,7 +22,15 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config
-RUN echo 'server { listen 80; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ $uri.html =404; } }' > /etc/nginx/conf.d/default.conf
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ $uri.html =404; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

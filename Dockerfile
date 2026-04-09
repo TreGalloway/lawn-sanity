@@ -20,13 +20,15 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy package files for production dependencies
-COPY astro/package.json astro/package-lock.json* ./
-RUN npm ci --omit=dev
+# Copy package files from builder
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/package-lock.json ./
+
+# Install production dependencies only
+RUN npm install --omit=dev
 
 # Copy built output from builder
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json ./
 
 EXPOSE 8080
 

@@ -104,27 +104,54 @@ const hasFullDescription = service?.fullDescription && service.fullDescription.l
         {service?.pricingTable && service.pricingTable.length > 0 && (
           <>
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Pricing</h2>
-            <div class="grid md:grid-cols-3 gap-6 mb-8">
-              {service.pricingTable.map((tier) => (
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
-                  <h3 class="text-lg font-bold text-gray-900 mb-2">{tier.tier}</h3>
-                  <p class="text-3xl font-bold text-primary-500 mb-2">{tier.price}</p>
-                  {tier.description && <p class="text-gray-600 text-sm mb-4">{tier.description}</p>}
-                  {tier.features && tier.features.length > 0 && (
-                    <ul class="space-y-2 text-sm text-gray-600">
-                      {tier.features.map((f) => (
-                        <li class="flex items-center gap-2">
-                          <svg class="w-4 h-4 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                          </svg>
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
+            {service.pricingTable.length > 4 ? (
+              <div class="overflow-x-auto mb-8">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="border-b-2 border-gray-200">
+                      <th class="py-3 pr-4 font-semibold text-gray-900">Tier</th>
+                      <th class="py-3 pr-4 font-semibold text-gray-900">Price</th>
+                      {service.pricingTable.some(t => t.description) && (
+                        <th class="py-3 pr-4 font-semibold text-gray-900">Details</th>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {service.pricingTable.map((tier) => (
+                      <tr class="border-b border-gray-100 hover:bg-gray-50">
+                        <td class="py-3 pr-4 font-medium text-gray-900">{tier.tier}</td>
+                        <td class="py-3 pr-4 text-primary-500 font-bold">{tier.price}</td>
+                        {service.pricingTable.some(t => t.description) && (
+                          <td class="py-3 pr-4 text-gray-600 text-sm">{tier.description || ''}</td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div class="grid sm:grid-cols-2 gap-6 mb-8">
+                {service.pricingTable.map((tier) => (
+                  <div class="bg-gray-50 rounded-xl p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">{tier.tier}</h3>
+                    <p class="text-3xl font-bold text-primary-500 mb-2">{tier.price}</p>
+                    {tier.description && <p class="text-gray-600 text-sm mb-4">{tier.description}</p>}
+                    {tier.features && tier.features.length > 0 && (
+                      <ul class="space-y-2 text-sm text-gray-600">
+                        {tier.features.map((f) => (
+                          <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </>
         )}
 

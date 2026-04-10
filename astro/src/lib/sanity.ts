@@ -2,8 +2,8 @@ import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import type { Service, ServiceArea, GalleryItem, SiteSettings, Page } from '../types';
 
-const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'your-project-id';
-const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
+const projectId = process.env.PUBLIC_SANITY_PROJECT_ID || import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'your-project-id';
+const dataset = process.env.PUBLIC_SANITY_DATASET || import.meta.env.PUBLIC_SANITY_DATASET || 'production';
 
 export const sanityClient = createClient({
   projectId,

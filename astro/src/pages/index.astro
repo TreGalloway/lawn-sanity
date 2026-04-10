@@ -4,16 +4,29 @@ import Hero from '../components/Hero.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import CTABanner from '../components/CTABanner.astro';
-import { fetchSiteSettings, fetchServices, fetchServiceAreas } from '../lib/sanity';
+import PageBlocks from '../components/PageBlocks.astro';
+import { fetchSiteSettings, fetchServices, fetchServiceAreas, fetchPageBySlug } from '../lib/sanity';
 
 const siteData = await fetchSiteSettings();
 const services = await fetchServices();
-const serviceAreas = await fetchServiceAreas();
+const serviceAreaDocs = await fetchServiceAreas();
+const homePage = await fetchPageBySlug('home');
+
+const hasBlocks = homePage?.blocks && homePage.blocks.length > 0;
+const serviceAreas = serviceAreaDocs.length > 0
+  ? serviceAreaDocs
+  : (siteData.serviceAreas || []).map((name, i) => ({ _id: String(i), areaName: name }));
 ---
 
 <Layout title="Home" description="MI Premier Lawn Care - Professional lawn care services in Flint, MI and surrounding areas. Free estimates on all services.">
-  <Hero siteData={siteData} />
-  <ServiceGrid services={services} />
-  <ServiceAreas areas={serviceAreas} />
-  <CTABanner siteData={siteData} />
+  {hasBlocks ? (
+    <PageBlocks blocks={homePage!.blocks!} siteData={siteData} />
+  ) : (
+    <>
+      <Hero siteData={siteData} />
+      <ServiceGrid services={services} />
+      <ServiceAreas areas={serviceAreas} />
+      <CTABanner siteData={siteData} />
+    </>
+  )}
 </Layout>

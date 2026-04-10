@@ -2,19 +2,26 @@
 import type { ServiceArea } from '../types';
 
 interface Props {
-  areas?: ServiceArea[];
+  areas?: (ServiceArea | string)[];
 }
 
-const DEFAULT_AREAS = [
-  { _id: '1', areaName: 'Flint' },
-  { _id: '2', areaName: 'Flint Township' },
-  { _id: '3', areaName: 'Flushing' },
-  { _id: '4', areaName: 'Mt. Morris' },
-  { _id: '5', areaName: 'Grand Blanc' },
+const DEFAULT_AREAS: (ServiceArea | string)[] = [
+  'Flint',
+  'Flint Township',
+  'Flushing',
+  'Burton',
+  'Grand Blanc',
 ];
 
 const { areas } = Astro.props;
-const serviceAreas = areas && areas.length > 0 ? areas : DEFAULT_AREAS;
+const rawAreas = areas && areas.length > 0 ? areas : DEFAULT_AREAS;
+
+const serviceAreas = rawAreas.map((area, i) => {
+  if (typeof area === 'string') {
+    return { _id: String(i), areaName: area };
+  }
+  return area;
+});
 ---
 
 <section class="py-16 lg:py-24 bg-white">

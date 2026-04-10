@@ -7,12 +7,27 @@ import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('terms');
 
-const pageBlocks = page?.blocks;
+const hasBlocks = page?.blocks && page.blocks.length > 0;
+const hasContent = page?.content && page.content.length > 0;
 ---
 
 <Layout title="Terms of Service" description="Terms of Service for MI Premier Lawn Care">
-  {pageBlocks && pageBlocks.length > 0 ? (
-    <PageBlocks blocks={pageBlocks} siteData={siteData} />
+  {hasBlocks ? (
+    <PageBlocks blocks={page.blocks!} siteData={siteData} />
+  ) : hasContent ? (
+    <section class="py-16 lg:py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+          Terms of Service
+        </h1>
+        <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm prose prose-lg max-w-none">
+          <p class="text-gray-600 mb-6">
+            Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+          <RichText value={page.content!} />
+        </div>
+      </div>
+    </section>
   ) : (
     <section class="py-16 lg:py-24 bg-gray-50">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

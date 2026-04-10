@@ -64,6 +64,7 @@ export interface Page {
   _id: string;
   title: string;
   slug: { current: string };
+  content?: any[];
   blocks?: PageBlock[];
 }
 

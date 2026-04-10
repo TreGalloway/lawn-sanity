@@ -132,7 +132,7 @@ const { blocks, siteData } = Astro.props;
 
     case 'serviceAreas':
       return (
-        <ServiceAreas areas={block.areas} />
+        <ServiceAreas areas={block.areas && block.areas.length > 0 ? block.areas : siteData?.serviceAreas} />
       );
 
     case 'richText':

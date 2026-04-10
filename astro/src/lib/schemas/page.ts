@@ -28,6 +28,13 @@ export const pageSchema = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'content',
+      title: 'Page Content',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Simple rich text content for the page. Use Content Blocks below for more control over layout.',
+    }),
+    defineField({
       name: 'blocks',
       title: 'Content Blocks',
       type: 'array',

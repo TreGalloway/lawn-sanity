@@ -14,66 +14,39 @@ const {
   services: providedServices
 } = Astro.props;
 
+const FALLBACK_DATA: Record<string, { shortDescription: string; icon: string }> = {
+  'lawn-mowing': { shortDescription: 'Weekly and biweekly mowing with string trimming, edging, and blowing.', icon: 'mowing' },
+  'mowing': { shortDescription: 'Weekly and biweekly mowing with string trimming, edging, and blowing.', icon: 'mowing' },
+  'hedge-trimming': { shortDescription: 'Professional hedge and bush trimming services.', icon: 'hedge_trimming' },
+  'leaf-removal': { shortDescription: 'Spring and fall leaf removal services.', icon: 'leaf_removal' },
+  'fertilizing': { shortDescription: 'Non-pesticide lawn fertilization for a healthier, greener lawn.', icon: 'fertilizing' },
+  'mulching': { shortDescription: 'Professional mulch installation services.', icon: 'mulching' },
+  'overseeding': { shortDescription: 'Spring and fall overseeding for a thicker lawn.', icon: 'overseeding' },
+  'snow-removal': { shortDescription: 'Reliable snow removal services for residential properties.', icon: 'snow_removal' },
+  'salting': { shortDescription: 'Rock salt and calcium chloride services.', icon: 'salting' },
+};
+
 const DEFAULT_SERVICES: Service[] = [
-  {
-    _id: '1',
-    name: "Mowing",
-    slug: { current: "mowing" },
-    shortDescription: "Weekly and biweekly mowing with string trimming, edging, and blowing.",
-    icon: "mowing"
-  },
-  {
-    _id: '2',
-    name: "Hedge Trimming",
-    slug: { current: "hedge-trimming" },
-    shortDescription: "Professional hedge and bush trimming services.",
-    icon: "hedge_trimming"
-  },
-  {
-    _id: '3',
-    name: "Leaf Removal",
-    slug: { current: "leaf-removal" },
-    shortDescription: "Spring and fall leaf removal services.",
-    icon: "leaf_removal"
-  },
-  {
-    _id: '4',
-    name: "Fertilizing",
-    slug: { current: "fertilizing" },
-    shortDescription: "Non-pesticide lawn fertilization for a healthier, greener lawn.",
-    icon: "fertilizing"
-  },
-  {
-    _id: '5',
-    name: "Mulching",
-    slug: { current: "mulching" },
-    shortDescription: "Professional mulch installation services.",
-    icon: "mulching"
-  },
-  {
-    _id: '6',
-    name: "Overseeding",
-    slug: { current: "overseeding" },
-    shortDescription: "Spring and fall overseeding for a thicker lawn.",
-    icon: "overseeding"
-  },
-  {
-    _id: '7',
-    name: "Snow Removal",
-    slug: { current: "snow-removal" },
-    shortDescription: "Reliable snow removal services for residential properties.",
-    icon: "snow_removal"
-  },
-  {
-    _id: '8',
-    name: "Salting",
-    slug: { current: "salting" },
-    shortDescription: "Rock salt and calcium chloride services.",
-    icon: "salting"
-  }
+  { _id: '1', name: 'Lawn Mowing', slug: { current: 'lawn-mowing' }, shortDescription: 'Weekly and biweekly mowing with string trimming, edging, and blowing.', icon: 'mowing' },
+  { _id: '2', name: 'Hedge Trimming', slug: { current: 'hedge-trimming' }, shortDescription: 'Professional hedge and bush trimming services.', icon: 'hedge_trimming' },
+  { _id: '3', name: 'Leaf Removal', slug: { current: 'leaf-removal' }, shortDescription: 'Spring and fall leaf removal services.', icon: 'leaf_removal' },
+  { _id: '4', name: 'Fertilizing', slug: { current: 'fertilizing' }, shortDescription: 'Non-pesticide lawn fertilization for a healthier, greener lawn.', icon: 'fertilizing' },
+  { _id: '5', name: 'Mulching', slug: { current: 'mulching' }, shortDescription: 'Professional mulch installation services.', icon: 'mulching' },
+  { _id: '6', name: 'Overseeding', slug: { current: 'overseeding' }, shortDescription: 'Spring and fall overseeding for a thicker lawn.', icon: 'overseeding' },
+  { _id: '7', name: 'Snow Removal', slug: { current: 'snow-removal' }, shortDescription: 'Reliable snow removal services for residential properties.', icon: 'snow_removal' },
+  { _id: '8', name: 'Salting', slug: { current: 'salting' }, shortDescription: 'Rock salt and calcium chloride services.', icon: 'salting' },
 ];
 
-const services = providedServices && providedServices.length > 0 ? providedServices : DEFAULT_SERVICES;
+const rawServices = providedServices && providedServices.length > 0 ? providedServices : DEFAULT_SERVICES;
+
+const services = rawServices.map((s) => {
+  const fallback = FALLBACK_DATA[s.slug.current];
+  return {
+    ...s,
+    shortDescription: s.shortDescription || fallback?.shortDescription || '',
+    icon: s.icon || fallback?.icon,
+  };
+});
 ---
 
 <section class="py-16 lg:py-24 bg-gray-50">

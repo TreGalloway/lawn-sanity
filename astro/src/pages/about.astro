@@ -2,27 +2,26 @@
 import Layout from '../layouts/Layout.astro';
 import CTABanner from '../components/CTABanner.astro';
 import RichText from '../components/RichText';
+import PageBlocks from '../components/PageBlocks.astro';
 import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('about');
 
-const pageContent = page?.content;
+const pageBlocks = page?.blocks;
 ---
 
 <Layout title="About" description="Learn about MI Premier Lawn Care - Your trusted local lawn care experts in Flint, MI and surrounding areas.">
-  <section class="py-16 lg:py-24 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8 text-center">
-        About Us
-      </h1>
-      
-      <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm mb-12">
-        {pageContent ? (
-          <div class="prose prose-lg max-w-none">
-            <RichText value={pageContent} />
-          </div>
-        ) : (
+  {pageBlocks && pageBlocks.length > 0 ? (
+    <PageBlocks blocks={pageBlocks} siteData={siteData} />
+  ) : (
+    <section class="py-16 lg:py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8 text-center">
+          About Us
+        </h1>
+        
+        <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm mb-12">
           <div class="prose prose-lg max-w-none">
             <p class="text-xl text-gray-600 mb-6">
               <strong>MI Premier Lawn Care, L.L.C</strong> is a locally-owned and operated lawn care business 
@@ -103,9 +102,9 @@ const pageContent = page?.content;
               )}
             </div>
           </div>
-        )}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
   <CTABanner siteData={siteData} />
 </Layout>

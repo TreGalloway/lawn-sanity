@@ -1,78 +1,77 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import RichText from '../components/RichText';
+import PageBlocks from '../components/PageBlocks.astro';
 import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('terms');
 
-const pageContent = page?.content;
+const pageBlocks = page?.blocks;
 ---
 
 <Layout title="Terms of Service" description="Terms of Service for MI Premier Lawn Care">
-  <section class="py-16 lg:py-24 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
-        Terms of Service
-      </h1>
-      
-      <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm prose prose-lg max-w-none">
-        <p class="text-gray-600 mb-6">
-          Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </p>
+  {pageBlocks && pageBlocks.length > 0 ? (
+    <PageBlocks blocks={pageBlocks} siteData={siteData} />
+  ) : (
+    <section class="py-16 lg:py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+          Terms of Service
+        </h1>
+        
+        <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm prose prose-lg max-w-none">
+          <p class="text-gray-600 mb-6">
+            Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
 
-        {pageContent ? (
-          <RichText value={pageContent} />
-        ) : (
-          <>
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Agreement to Terms</h2>
-            <p class="text-gray-600 mb-4">
-              By accessing or using our services, you agree to be bound by these Terms of Service. 
-              If you do not agree to these terms, please do not use our services.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Agreement to Terms</h2>
+          <p class="text-gray-600 mb-4">
+            By accessing or using our services, you agree to be bound by these Terms of Service. 
+            If you do not agree to these terms, please do not use our services.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Services</h2>
-            <p class="text-gray-600 mb-4">
-              MI Premier Lawn Care provides lawn care and landscaping services as described on our website. 
-              We reserve the right to modify or discontinue services at any time.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Services</h2>
+          <p class="text-gray-600 mb-4">
+            MI Premier Lawn Care provides lawn care and landscaping services as described on our website. 
+            We reserve the right to modify or discontinue services at any time.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Quotes and Pricing</h2>
-            <p class="text-gray-600 mb-4">
-              All quotes provided are estimates and may vary based on the actual scope of work required. 
-              Final pricing will be confirmed before work begins.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Quotes and Pricing</h2>
+          <p class="text-gray-600 mb-4">
+            All quotes provided are estimates and may vary based on the actual scope of work required. 
+            Final pricing will be confirmed before work begins.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Payment Terms</h2>
-            <p class="text-gray-600 mb-4">
-              Payment terms will be communicated at the time of service agreement. We accept cash, check, 
-              and major credit cards.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Payment Terms</h2>
+          <p class="text-gray-600 mb-4">
+            Payment terms will be communicated at the time of service agreement. We accept cash, check, 
+            and major credit cards.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Cancellation Policy</h2>
-            <p class="text-gray-600 mb-4">
-              We request at least 24 hours notice for service cancellation. Late cancellations may be 
-              subject to a cancellation fee.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Cancellation Policy</h2>
+          <p class="text-gray-600 mb-4">
+            We request at least 24 hours notice for service cancellation. Late cancellations may be 
+            subject to a cancellation fee.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Limitation of Liability</h2>
-            <p class="text-gray-600 mb-4">
-              MI Premier Lawn Care shall not be liable for any indirect, incidental, special, consequential, 
-              or punitive damages resulting from your use of our services.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Limitation of Liability</h2>
+          <p class="text-gray-600 mb-4">
+            MI Premier Lawn Care shall not be liable for any indirect, incidental, special, consequential, 
+            or punitive damages resulting from your use of our services.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact Us</h2>
-            <p class="text-gray-600 mb-4">
-              If you have any questions about these Terms of Service, please contact us at:
-            </p>
-            <p class="text-gray-600">
-              <strong>MI Premier Lawn Care, L.L.C</strong><br />
-              Phone: {siteData.phoneNumber}<br />
-              Email: {siteData.email}
-            </p>
-          </>
-        )}
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact Us</h2>
+          <p class="text-gray-600 mb-4">
+            If you have any questions about these Terms of Service, please contact us at:
+          </p>
+          <p class="text-gray-600">
+            <strong>MI Premier Lawn Care, L.L.C</strong><br />
+            Phone: {siteData.phoneNumber}<br />
+            Email: {siteData.email}
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 </Layout>

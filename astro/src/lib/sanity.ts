@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
+import { createImageUrlBuilder } from '@sanity/image-url';
 import type { Service, ServiceArea, GalleryItem, SiteSettings, Page } from '../types';
 
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'your-project-id';
@@ -12,7 +12,7 @@ export const sanityClient = createClient({
   useCdn: true,
 });
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = createImageUrlBuilder(sanityClient);
 
 export function urlFor(source: any) {
   return builder.image(source);
@@ -44,7 +44,7 @@ export async function fetchSiteSettings(): Promise<SiteSettings> {
 export async function fetchServices(): Promise<Service[]> {
   try {
     return await sanityClient.fetch<Service[]>(
-      `*[_type == "service"] | order(tabOrder asc)`
+      `*[_type == "service"] | order(displayOrder asc)`
     );
   } catch {
     return [];

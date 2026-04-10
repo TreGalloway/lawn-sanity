@@ -1,66 +1,65 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import RichText from '../components/RichText';
+import PageBlocks from '../components/PageBlocks.astro';
 import { fetchSiteSettings, fetchPageBySlug } from '../lib/sanity';
 
 const siteData = await fetchSiteSettings();
 const page = await fetchPageBySlug('privacy');
 
-const pageContent = page?.content;
+const pageBlocks = page?.blocks;
 ---
 
 <Layout title="Privacy Policy" description="Privacy Policy for MI Premier Lawn Care">
-  <section class="py-16 lg:py-24 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
-        Privacy Policy
-      </h1>
-      
-      <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm prose prose-lg max-w-none">
-        <p class="text-gray-600 mb-6">
-          Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </p>
+  {pageBlocks && pageBlocks.length > 0 ? (
+    <PageBlocks blocks={pageBlocks} siteData={siteData} />
+  ) : (
+    <section class="py-16 lg:py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+          Privacy Policy
+        </h1>
+        
+        <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-sm prose prose-lg max-w-none">
+          <p class="text-gray-600 mb-6">
+            Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
 
-        {pageContent ? (
-          <RichText value={pageContent} />
-        ) : (
-          <>
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Information We Collect</h2>
-            <p class="text-gray-600 mb-4">
-              We collect information you provide directly to us, such as when you request a quote, 
-              contact us, or otherwise interact with our services. This may include your name, email 
-              address, phone number, and property address.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Information We Collect</h2>
+          <p class="text-gray-600 mb-4">
+            We collect information you provide directly to us, such as when you request a quote, 
+            contact us, or otherwise interact with our services. This may include your name, email 
+            address, phone number, and property address.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">How We Use Your Information</h2>
-            <p class="text-gray-600 mb-4">
-              We use the information we collect to:
-            </p>
-            <ul class="list-disc pl-6 space-y-2 text-gray-600 mb-4">
-              <li>Provide, maintain, and improve our services</li>
-              <li>Respond to your comments, questions, and requests</li>
-              <li>Communicate with you about products, services, and events</li>
-              <li>Monitor and analyze trends, usage, and activities</li>
-            </ul>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">How We Use Your Information</h2>
+          <p class="text-gray-600 mb-4">
+            We use the information we collect to:
+          </p>
+          <ul class="list-disc pl-6 space-y-2 text-gray-600 mb-4">
+            <li>Provide, maintain, and improve our services</li>
+            <li>Respond to your comments, questions, and requests</li>
+            <li>Communicate with you about products, services, and events</li>
+            <li>Monitor and analyze trends, usage, and activities</li>
+          </ul>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Information Sharing</h2>
-            <p class="text-gray-600 mb-4">
-              We do not sell, trade, or otherwise transfer your personal information to third parties 
-              without your consent, except as described in this policy.
-            </p>
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Information Sharing</h2>
+          <p class="text-gray-600 mb-4">
+            We do not sell, trade, or otherwise transfer your personal information to third parties 
+            without your consent, except as described in this policy.
+          </p>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact Us</h2>
-            <p class="text-gray-600 mb-4">
-              If you have any questions about this Privacy Policy, please contact us at:
-            </p>
-            <p class="text-gray-600">
-              <strong>MI Premier Lawn Care, L.L.C</strong><br />
-              Phone: {siteData.phoneNumber}<br />
-              Email: {siteData.email}
-            </p>
-          </>
-        )}
+          <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact Us</h2>
+          <p class="text-gray-600 mb-4">
+            If you have any questions about this Privacy Policy, please contact us at:
+          </p>
+          <p class="text-gray-600">
+            <strong>MI Premier Lawn Care, L.L.C</strong><br />
+            Phone: {siteData.phoneNumber}<br />
+            Email: {siteData.email}
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 </Layout>

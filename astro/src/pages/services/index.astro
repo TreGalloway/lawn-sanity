@@ -12,11 +12,9 @@ const DEFAULT_SERVICES: Service[] = [
   { _id: '1', name: 'Lawn Mowing', slug: { current: 'lawn-mowing' }, shortDescription: 'Weekly and biweekly mowing with string trimming, edging, and blowing.' },
   { _id: '2', name: 'Hedge Trimming', slug: { current: 'hedge-trimming' }, shortDescription: 'Professional hedge and bush trimming services.' },
   { _id: '3', name: 'Leaf Removal', slug: { current: 'leaf-removal' }, shortDescription: 'Spring and fall leaf removal services.' },
-  { _id: '4', name: 'Fertilizing', slug: { current: 'fertilizing' }, shortDescription: 'Non-pesticide lawn fertilization for a healthier, greener lawn.' },
-  { _id: '5', name: 'Mulching', slug: { current: 'mulching' }, shortDescription: 'Professional mulch installation services.' },
-  { _id: '6', name: 'Overseeding', slug: { current: 'overseeding' }, shortDescription: 'Spring and fall overseeding for a thicker lawn.' },
-  { _id: '7', name: 'Snow Removal', slug: { current: 'snow-removal' }, shortDescription: 'Reliable snow removal services for residential properties.' },
-  { _id: '8', name: 'Salting', slug: { current: 'salting' }, shortDescription: 'Rock salt and calcium chloride services.' },
+  { _id: '4', name: 'Mulching', slug: { current: 'mulching' }, shortDescription: 'Professional mulch installation services.' },
+  { _id: '5', name: 'Overseeding', slug: { current: 'overseeding' }, shortDescription: 'Spring and fall overseeding for a thicker lawn.' },
+  { _id: '6', name: 'Snow Removal', slug: { current: 'snow-removal' }, shortDescription: 'Reliable snow removal services for residential properties.' },
 ];
 
 const services = sanityServices.length > 0 ? sanityServices : DEFAULT_SERVICES;
@@ -25,11 +23,9 @@ const FALLBACK_DESCRIPTIONS: Record<string, string> = {
   'lawn-mowing': 'Weekly and biweekly mowing with string trimming, edging, and blowing.',
   'hedge-trimming': 'Professional hedge and bush trimming services.',
   'leaf-removal': 'Spring and fall leaf removal services.',
-  'fertilizing': 'Non-pesticide lawn fertilization for a healthier, greener lawn.',
   'mulching': 'Professional mulch installation services.',
   'overseeding': 'Spring and fall overseeding for a thicker lawn.',
   'snow-removal': 'Reliable snow removal services for residential properties.',
-  'salting': 'Rock salt and calcium chloride services.',
 };
 ---
 

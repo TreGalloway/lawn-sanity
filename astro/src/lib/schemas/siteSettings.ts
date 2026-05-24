@@ -33,7 +33,7 @@ export const siteSettingsSchema = defineType({
       name: 'email',
       title: 'Email',
       type: 'string',
-      initialValue: 'mipremierlawcare@gmail.com',
+      initialValue: 'mipremierlawncare@gmail.com',
     }),
     defineField({
       name: 'founded',

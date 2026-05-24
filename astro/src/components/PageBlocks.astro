@@ -25,7 +25,7 @@ const { blocks, siteData } = Astro.props;
               <img
                 src={urlFor(block.backgroundImage).width(1920).height(800).url()}
                 alt=""
-                class="w-full h-full object-cover opacity-40"
+                class="w-full h-full object-cover opacity-10"
               />
             </div>
           )}
@@ -161,7 +161,7 @@ const { blocks, siteData } = Astro.props;
                 href={siteData?.yardbookUrl || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors"
+                class="inline-flex items-center justify-center gap-2 bg-accent-300 hover:bg-accent-400 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg transition-colors"
               >
                 {siteData?.contactQuoteButtonText || 'Request a Quote'}
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

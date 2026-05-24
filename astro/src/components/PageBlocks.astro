@@ -13,6 +13,10 @@ interface Props {
 }
 
 const { blocks, siteData } = Astro.props;
+const hasServiceGrid = blocks?.some(b => b._type === 'serviceGrid');
+const hasServiceAreas = blocks?.some(b => b._type === 'serviceAreas');
+const allServices = hasServiceGrid ? await fetchServices() : [];
+const allAreas = hasServiceAreas ? await fetchServiceAreas() : [];
 ---
 
 {blocks.map((block) => {
@@ -59,8 +63,12 @@ const { blocks, siteData } = Astro.props;
       );
 
     case 'serviceGrid':
+      const serviceRefs = block.services?.map((s: any) => s._ref) || [];
+      const filteredServices = serviceRefs.length > 0
+        ? allServices.filter(s => serviceRefs.includes(s._id))
+        : allServices;
       return (
-        <ServiceGrid services={block.services} />
+        <ServiceGrid services={filteredServices} />
       );
 
     case 'ctaBanner':
@@ -131,8 +139,12 @@ const { blocks, siteData } = Astro.props;
       );
 
     case 'serviceAreas':
+      const areaRefs = block.areas?.map((a: any) => a._ref) || [];
+      const resolvedAreas = areaRefs.length > 0
+        ? allAreas.filter(a => areaRefs.includes(a._id))
+        : allAreas;
       return (
-        <ServiceAreas areas={block.areas && block.areas.length > 0 ? block.areas : siteData?.serviceAreas} />
+        <ServiceAreas areas={resolvedAreas.length > 0 ? resolvedAreas : siteData?.serviceAreas} />
       );
 
     case 'richText':

@@ -23,16 +23,17 @@ const allAreas = hasServiceAreas ? await fetchServiceAreas() : [];
   switch (block._type) {
     case 'hero':
       return (
-        <section class="relative bg-gray-900 text-white py-24 lg:py-32">
+        <section class="relative text-white py-24 lg:py-32">
           {block.backgroundImage && (
             <div class="absolute inset-0">
               <img
                 src={urlFor(block.backgroundImage).width(1920).height(800).url()}
                 alt=""
-                class="w-full h-full object-cover opacity-10"
+                class="w-full h-full object-cover"
               />
             </div>
           )}
+          <div class="absolute inset-0 bg-black/30"></div>
           <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {block.title && (
               <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
